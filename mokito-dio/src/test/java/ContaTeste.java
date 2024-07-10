@@ -41,4 +41,11 @@ public class ContaTeste {
 
     }
 
+    @Test
+    void retornaTrueParaQualquerValorNaValidacaoDeSaldo(){
+        Mockito.doNothing().when(conta).validaSaldo(ArgumentMatchers.anyInt());
+        // aqui não vai fazer nada mesmo desconsiderando a validação lá do método
+        conta.validaSaldo(3_500);
+    }
+
 }
