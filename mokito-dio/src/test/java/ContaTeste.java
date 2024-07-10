@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.Spy;
@@ -26,6 +27,18 @@ public class ContaTeste {
         //inOrder.verify(conta).debita(300);
         inOrder.verify(conta).enviaCreditoParaEmissor(300);
         inOrder.verify(conta).debita(300);
+    }
+
+    @Test
+    void validarQuantidadeDeChamadas(){
+        conta.validaSaldo(300);
+        conta.validaSaldo(300);
+        conta.validaSaldo(300);
+
+        Mockito.verify(conta, Mockito.times(3)).validaSaldo(300);
+
+        Mockito.verify(conta, Mockito.times(3)).validaSaldo(ArgumentMatchers.anyInt());
+
     }
 
 }
