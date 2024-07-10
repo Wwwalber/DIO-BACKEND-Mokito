@@ -1,13 +1,15 @@
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.BeforeAll;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import mokito.example.ApiDosCorreios;
 
-@ExtendWith(MockitoExtension.class)
 public class CadastrarPessoaTeste {
+    @SuppressWarnings("deprecation")
+    @BeforeAll
+    void setup(){
+        MockitoAnnotations.initMocks(this);  // Inicializa mocks de dependências
+    }
 
-    @Mock
-    private ApiDosCorreios apiDosCorreios;
-    
+    private ApiDosCorreios apiDosCorreios = Mockito.mock(ApiDosCorreios.class);
 }
