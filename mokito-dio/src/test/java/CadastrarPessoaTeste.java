@@ -1,15 +1,40 @@
-import org.junit.jupiter.api.BeforeAll;
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import mokito.example.ApiDosCorreios;
+import mokito.example.CadastrarPessoa;
+import mokito.example.DadosLocalizacao;
+import mokito.example.Pessoa;
 
+@ExtendWith(MockitoExtension.class)
 public class CadastrarPessoaTeste {
-    @SuppressWarnings("deprecation")
-    @BeforeAll
-    void setup(){
-        MockitoAnnotations.initMocks(this);  // Inicializa mocks de dependências
+
+    @Mock
+    private ApiDosCorreios apiDosCorreios;
+    
+    @InjectMocks
+    private CadastrarPessoa cadastrarPessoa;
+
+    @Test
+    void validarDadosDeCadastro(){
+        // dados para serem chamados em vez de ir láaaa na classe. Isso serve como uma simulação
+        DadosLocalizacao dadosLocalizacao = new DadosLocalizacao("MG", "Uberaba", "Rua Castro Alves", "Casa", "Nova Floresta");
+        
+        Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep("69317300")).thenReturn(dadosLocalizacao);
+        Pessoa jose = cadastrarPessoa.cadastrarPessoa("José", "28578527976", LocalDate.of(1947, 1, 15), "69317300");
+
+        assertEquals("José", jose.getNome());
+        assertEquals("28578527976", jose.getDocumento());
+        assertEquals("Uberaba", jose.getEndereco().getCidade());
+        assertEquals("Rua Castro Alves", jose.getEndereco().getLogradouro());
+        
     }
 
-    private ApiDosCorreios apiDosCorreios = Mockito.mock(ApiDosCorreios.class);
 }
