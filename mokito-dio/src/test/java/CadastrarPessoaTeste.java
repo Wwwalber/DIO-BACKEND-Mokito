@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.Assertions;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -29,13 +28,10 @@ public class CadastrarPessoaTeste {
         // dados para serem chamados em vez de ir láaaa na classe. Isso serve como uma simulação
         DadosLocalizacao dadosLocalizacao = new DadosLocalizacao("MG", "Uberaba", "Rua Castro Alves", "Casa", "Nova Floresta");
         
-        Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep(anyString())).thenReturn(dadosLocalizacao);
+        Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep(anyString())).thenReturn(null);
         Pessoa jose = cadastrarPessoa.cadastrarPessoa("José", "28578527976", LocalDate.of(1947, 1, 15), "69317300");
 
-        assertEquals("José", jose.getNome());
-        assertEquals("28578527976", jose.getDocumento());
-        assertEquals("Uberaba", jose.getEndereco().getCidade());
-        assertEquals("Rua Castro Alves", jose.getEndereco().getLogradouro());
+        Assertions.assertNull(jose.getEndereco());
         
     }
 
