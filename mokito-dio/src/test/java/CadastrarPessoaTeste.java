@@ -39,8 +39,10 @@ public class CadastrarPessoaTeste {
     @Test
     void lancarExceptionQuandoChamarAPIDosCorreios(){
         // testar se ocoorrer uma exceção
-        Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep(anyString())).thenThrow(IllegalArgumentException.class);
-        
+        Mockito.doThrow(IllegalArgumentException.class)
+            .when(apiDosCorreios)
+                .buscaDadosComBaseNoCep(anyString());
+                
         // ser esperava a excessão então ok agora, fomos avisados
         Assertions.assertThrows(IllegalArgumentException.class, () -> cadastrarPessoa.cadastrarPessoa("José", "28578527976", LocalDate.of(1947, 1, 15), "69317300"));
     }
