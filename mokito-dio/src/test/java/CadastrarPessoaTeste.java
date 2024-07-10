@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,16 @@ public class CadastrarPessoaTeste {
         assertEquals("Uberaba", jose.getEndereco().getCidade());
         assertEquals("Rua Castro Alves", jose.getEndereco().getLogradouro());
         
+    }
+
+    
+    @Test
+    void lancarExceptionQuandoChamarAPIDosCorreios(){
+        // testar se ocoorrer uma exceção
+        Mockito.when(apiDosCorreios.buscaDadosComBaseNoCep(anyString())).thenThrow(IllegalArgumentException.class);
+        
+        // ser esperava a excessão então ok agora, fomos avisados
+        Assertions.assertThrows(IllegalArgumentException.class, () -> cadastrarPessoa.cadastrarPessoa("José", "28578527976", LocalDate.of(1947, 1, 15), "69317300"));
     }
 
 }
